@@ -1,6 +1,9 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import { MongoClient } from "mongodb";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 dotenv.config();
 
@@ -11,6 +14,127 @@ app.use(express.json());
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
+const JWT_SECRET = process.env.JWT_SECRET;
+const MONGODB_URI = process.env.MONGODB_URI;
+
+let db;
+
+MongoClient.connect(MONGODB_URI)
+    .then((client) => {
+        db = client.db("gustech_os");
+        console.log("Conectado ao MongoDB!");
+    })
+    .catch((erro) => {
+        console.log("Erro ao conectar no MongoDB:", erro.message);
+    });
+
+// ---------- ROTA DE SAUDE ----------
+
+app.get("/", (req, res) => {
+    res.send("GusTech OS backend rodando!");
+});
+
+// ---------- CADASTRO ----------
+
+app.post("/registrar", async (req, res) => {
+
+    try {
+
+        const { usuario, senha } = req.body;
+
+        if (!usuario || !senha) {
+            return res.status(400).json({ erro: "Usuário e senha são obrigatórios." });
+        }
+
+        if (senha.length < 6) {
+            return res.status(400).json({ erro: "A senha precisa ter pelo menos 6 caracteres." });
+        }
+
+        const usuarioExistente = await db.collection("usuarios").findOne({ usuario: usuario.toLowerCase() });
+
+        if (usuarioExistente) {
+            return res.status(400).json({ erro: "Esse usuário já existe. Escolha outro." });
+        }
+
+        const senhaCriptografada = await bcrypt.hash(senha, 10);
+
+        await db.collection("usuarios").insertOne({
+            usuario: usuario.toLowerCase(),
+            senha: senhaCriptografada,
+            criadoEm: new Date()
+        });
+
+        res.json({ sucesso: true, mensagem: "Usuário criado com sucesso!" });
+
+    } catch (erro) {
+        console.log(erro);
+        res.status(500).json({ erro: "Erro ao criar usuário." });
+    }
+
+});
+
+// ---------- LOGIN ----------
+
+app.post("/login", async (req, res) => {
+
+    try {
+
+        const { usuario, senha } = req.body;
+
+        if (!usuario || !senha) {
+            return res.status(400).json({ erro: "Usuário e senha são obrigatórios." });
+        }
+
+        const usuarioEncontrado = await db.collection("usuarios").findOne({ usuario: usuario.toLowerCase() });
+
+        if (!usuarioEncontrado) {
+            return res.status(401).json({ erro: "Usuário ou senha inválidos." });
+        }
+
+        const senhaCorreta = await bcrypt.compare(senha, usuarioEncontrado.senha);
+
+        if (!senhaCorreta) {
+            return res.status(401).json({ erro: "Usuário ou senha inválidos." });
+        }
+
+        const token = jwt.sign(
+            { usuario: usuarioEncontrado.usuario },
+            JWT_SECRET,
+            { expiresIn: "7d" }
+        );
+
+        res.json({ sucesso: true, token });
+
+    } catch (erro) {
+        console.log(erro);
+        res.status(500).json({ erro: "Erro ao fazer login." });
+    }
+
+});
+
+// ---------- MIDDLEWARE DE PROTEÇÃO ----------
+
+function verificarToken(req, res, next) {
+
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader) {
+        return res.status(401).json({ erro: "Não autenticado." });
+    }
+
+    const token = authHeader.split(" ")[1];
+
+    try {
+        const dados = jwt.verify(token, JWT_SECRET);
+        req.usuario = dados.usuario;
+        next();
+    } catch (erro) {
+        return res.status(401).json({ erro: "Sessão expirada. Faça login novamente." });
+    }
+
+}
+
+// ---------- GERADOR DE OS (PROTEGIDO) ----------
 
 const MODELOS = [
     "openai/gpt-oss-120b:free",
@@ -166,10 +290,8 @@ async function chamarIA(prompt) {
 
     return null;
 }
-app.get("/", (req, res) => {
-    res.send("GusTech OS backend rodando!");
-});
-app.post("/gerar-os", async (req, res) => {
+
+app.post("/gerar-os", verificarToken, async (req, res) => {
 
     try {
 
