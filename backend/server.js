@@ -166,7 +166,9 @@ async function chamarIA(prompt) {
 
     return null;
 }
-
+app.get("/", (req, res) => {
+    res.send("GusTech OS backend rodando!");
+});
 app.post("/gerar-os", async (req, res) => {
 
     try {
