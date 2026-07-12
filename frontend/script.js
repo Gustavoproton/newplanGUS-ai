@@ -1,4 +1,4 @@
-const BACKEND_URL = "https://literate-space-goldfish-5vv5qp457w7x24x74-3000.app.github.dev";
+const BACKEND_URL = "https://gustech-os-backend.onrender.com";
 
 function login(){
     let usuario=document.getElementById("usuario").value;
