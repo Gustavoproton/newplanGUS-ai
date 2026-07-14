@@ -1,6 +1,61 @@
 const BACKEND_URL = "https://gustech-os-backend.onrender.com";
 
-// ---------- LOGIN ----------
+function escaparHTML(texto) {
+    const div = document.createElement("div");
+    div.textContent = texto;
+    return div.innerHTML;
+}
+
+function formatarResultado(texto) {
+
+    const escapado = escaparHTML(texto);
+    const linhas = escapado.split("\n");
+    let html = "";
+    let dentroDeLista = false;
+
+    const titulosSecao = ["DADOS DO EQUIPAMENTO", "RELATÓRIOS E DOCUMENTOS A SEREM EMITIDOS"];
+
+    linhas.forEach((linhaOriginal) => {
+
+        const textoSemNegrito = linhaOriginal.replace(/\*\*/g, "").trim();
+        const linhaComNegrito = linhaOriginal.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+        const linhaLimpa = linhaComNegrito.trim();
+
+        const ehItemDeLista = /^-\s+/.test(linhaLimpa);
+        const ehEtapa = /^ETAPA\s*[–-]/.test(textoSemNegrito);
+        const ehTituloSecao = titulosSecao.some((t) => textoSemNegrito.toUpperCase() === t);
+
+        if (ehItemDeLista) {
+            if (!dentroDeLista) {
+                html += "<ul>";
+                dentroDeLista = true;
+            }
+            html += `<li>${linhaLimpa.replace(/^-\s+/, "")}</li>`;
+        } else {
+            if (dentroDeLista) {
+                html += "</ul>";
+                dentroDeLista = false;
+            }
+            if (linhaLimpa === "") {
+                html += "<p></p>";
+            } else if (ehEtapa) {
+                html += `<h3 class="etapa-titulo">${textoSemNegrito}</h3>`;
+            } else if (ehTituloSecao) {
+                html += `<h3 class="secao-titulo">${textoSemNegrito}</h3>`;
+            } else {
+                html += `<p>${linhaLimpa}</p>`;
+            }
+        }
+
+    });
+
+    if (dentroDeLista) {
+        html += "</ul>";
+    }
+
+    return html;
+
+}
 
 const botaoLogin = document.getElementById("botaoLogin");
 
@@ -53,8 +108,6 @@ if (botaoLogin) {
     });
 
 }
-
-// ---------- CADASTRO ----------
 
 const botaoRegistrar = document.getElementById("botaoRegistrar");
 
@@ -111,8 +164,6 @@ if (botaoRegistrar) {
 
 }
 
-// ---------- PROTEÇÃO DA PÁGINA DO GERADOR ----------
-
 const gerar = document.getElementById("gerar");
 
 if (gerar) {
@@ -133,7 +184,7 @@ if (gerar) {
             return;
         }
 
-        resultado.value = "Gerando OS...";
+        resultado.innerHTML = "<p>Gerando OS...</p>";
         gerar.disabled = true;
 
         try {
@@ -157,13 +208,13 @@ if (gerar) {
             const dados = await resposta.json();
 
             if (dados.erro) {
-                resultado.value = "Erro ao gerar a OS: " + dados.erro;
+                resultado.innerHTML = `<p>Erro ao gerar a OS: ${dados.erro}</p>`;
             } else {
-                resultado.value = dados.resultado;
+                resultado.innerHTML = formatarResultado(dados.resultado);
             }
 
         } catch (erro) {
-            resultado.value = "Não foi possível conectar ao servidor. Verifique se o backend está rodando.";
+            resultado.innerHTML = "<p>Não foi possível conectar ao servidor. Verifique se o backend está rodando.</p>";
         } finally {
             gerar.disabled = false;
         }
@@ -172,17 +223,36 @@ if (gerar) {
 
 }
 
-// ---------- COPIAR ----------
-
 const copiar = document.getElementById("copiar");
 
 if (copiar) {
 
-    copiar.addEventListener("click", () => {
-        const texto = document.getElementById("resultado");
-        texto.select();
-        document.execCommand("copy");
-        alert("OS copiada com sucesso!");
+    copiar.addEventListener("click", async () => {
+
+        const resultado = document.getElementById("resultado");
+        const html = resultado.innerHTML;
+        const texto = resultado.innerText;
+
+        try {
+
+            const item = new ClipboardItem({
+                "text/html": new Blob([html], { type: "text/html" }),
+                "text/plain": new Blob([texto], { type: "text/plain" })
+            });
+
+            await navigator.clipboard.write([item]);
+            alert("OS copiada com formatação! Pode colar direto no Word.");
+
+        } catch (erro) {
+
+            navigator.clipboard.writeText(texto).then(() => {
+                alert("OS copiada (texto simples).");
+            }).catch(() => {
+                alert("Não foi possível copiar. Selecione o texto manualmente.");
+            });
+
+        }
+
     });
 
 }
