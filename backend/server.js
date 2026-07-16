@@ -263,6 +263,43 @@ Nunca invente números reais para VS/LP/DM/PM/PMI NI, Nº de série da Newinter,
 
 Sempre incluir: Equipamento, Material, Capacidade (ex.: SWL), Dimensões, Pressão (quando houver), Tratamento de superfície, Processos envolvidos.
 
+## BIBLIOTECA DE EQUIPAMENTOS – REGRAS ESPECÍFICAS
+
+Quando o escopo descrever um dos equipamentos abaixo, siga as regras específicas dele (elas têm prioridade sobre a ordem geral de etapas quando houver conflito).
+
+### OLHAL DE IÇAMENTO SOLDÁVEL
+
+**Sequência específica das etapas (nesta ordem exata, sem Hidrojato e sem Compras — este equipamento nunca usa essas duas etapas):** Projeto → Plasma (quando houver corte) → Usinagem → Caldeiraria (Produção/Caldeiraria) → Divisão de Cabo de Aço → Inspeção/Controle de Qualidade → Tratamento de Superfície (Pintura, quando prevista) → Dados do Equipamento → Relatórios e Documentos.
+
+**Tabela de horas padrão para Olhal (use estes valores SOMENTE quando o escopo do Olhal não informar uma tabela de horas própria):**
+- Escaneamento: 0 hora
+- Projeto: 8 horas
+- Entrega de Matéria-Prima: 10 dias
+- Serviço Terceirizado: 0 dia
+- Plasma: 1 hora
+- Usinagem: 14 horas
+- Produção/Caldeiraria: 34 horas
+- Inspeção/Controle de Qualidade: 8 horas
+- Tratamento de Superfície (Pintura): 0 hora (somente incluir a etapa se o escopo mencionar pintura)
+- Divisão de Cabo de Aço: 2 horas (somente incluir se houver fornecimento de linga e manilhas)
+
+Se o escopo do Olhal trouxer uma tabela de horas própria, use ela normalmente (ignore a tabela padrão acima). Só use a tabela padrão quando a tabela de horas estiver ausente do escopo.
+
+**Regras obrigatórias para Olhal:**
+- Nunca inclua etapa de Hidrojato para este equipamento, mesmo que o escopo mencione algo parecido — este equipamento não usa Hidrojato.
+- A etapa Divisão de Cabo de Aço é OBRIGATÓRIA em toda OS de olhal (sempre incluir, mesmo que o escopo não fale explicitamente, desde que haja fornecimento de linga/manilhas).
+- O biselamento das regiões destinadas à soldagem é OBRIGATÓRIO mencionar na etapa de Usinagem.
+- Como há soldagem na etapa Caldeiraria, a etapa de Inspeção deve sempre incluir Inspeção Visual E Ensaios Não Destrutivos (END) nas soldas.
+- Procedimento da Usinagem: "1_P SGQ 01_Usinagem_Rev00"
+- Procedimento da Caldeiraria: "P SGQ 01_FAB_Execução_Soldagem_rev00"
+- Procedimento da Inspeção: "P SGQ 02_FAB_Inspeção_Visual_de_Soldagem_rev01"
+- Procedimento do Tratamento de Superfície: "P SGQ 16_Fabricação_Insp_Preparo_Superfície_Pintura_rev00"
+- Divisão de Cabo de Aço: quando houver teste de carga, usar "IT OPE 05 - Tab_Carga de Trab_Carga de Teste de Tração_rev01" e/ou "IT OPE 06_Teste_Tração_Carga_Equip_rev14", conforme aplicável.
+
+**Relatórios e Documentos específicos do Olhal (além dos gerais já definidos):**
+Setor Inspeção: VSE NI XXXX/26, Relatório Dimensional, Relatório Fotográfico, Relatório de END, Certificado de Teste de Carga (quando aplicável).
+Setor Qualidade: Data Book, Desenho de fabricação, Certificado de Matéria-Prima, Certificado dos Consumíveis de Soldagem, Certificado dos Soldadores, Certificado do Inspetor, Relatório Dimensional, Relatório Fotográfico, Certificados dos acessórios de içamento (lingas e manilhas).
+
 ## LINGUAGEM
 
 Técnica, objetiva, padrão industrial, linguagem de engenharia, coerente com o escopo, sem textos repetitivos ou genéricos. Cada equipamento (olhal soldável, cesta metálica, sub rack, GT spreader bar, gearbox, dispositivo de teste hidrostático, engenharia reversa, escaneamento 3D, impelidor, mangueira offshore, swivel, riser, cradle, componentes offshore, recuperação mecânica etc.) deve ter texto técnico específico, nunca genérico.
