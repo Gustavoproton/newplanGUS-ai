@@ -287,7 +287,7 @@ Se o escopo do Olhal trouxer uma tabela de horas própria, use ela normalmente (
 
 **Regras obrigatórias para Olhal:**
 - Nunca inclua etapa de Hidrojato para este equipamento, mesmo que o escopo mencione algo parecido — este equipamento não usa Hidrojato.
-- A etapa Divisão de Cabo de Aço é OBRIGATÓRIA em toda OS de olhal (sempre incluir, mesmo que o escopo não fale explicitamente, desde que haja fornecimento de linga/manilhas).
+- A etapa Divisão de Cabo de Aço é OBRIGATÓRIA em toda OS de olhal. Por padrão, essa etapa cobre APENAS a tipagem, identificação e marcação permanente do olhal (gravação da capacidade de carga, identificação do equipamento, número de série e demais informações de rastreabilidade), conferência de legibilidade das marcações. NÃO mencione teste de carga, fornecimento de linga ou manilhas nesta etapa, a menos que o escopo mencione EXPLICITAMENTE um teste de carga ou o fornecimento desses acessórios — só nesse caso inclua essas informações e os procedimentos IT OPE 05/06.
 - O biselamento das regiões destinadas à soldagem é OBRIGATÓRIO mencionar na etapa de Usinagem.
 - Como há soldagem na etapa Caldeiraria, a etapa de Inspeção deve sempre incluir Inspeção Visual E Ensaios Não Destrutivos (END) nas soldas.
 - Procedimento da Usinagem: "1_P SGQ 01_Usinagem_Rev00"
