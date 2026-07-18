@@ -167,11 +167,13 @@ Se uma etapa tiver 0 horas/0 dias na tabela fornecida, NÃO a inclua na OS.
 
 ## FORMATAÇÃO OBRIGATÓRIA DE CADA ETAPA
 
-ETAPA – XXXXX
+**ETAPA – XXXXX**
+
+☐ Concluída
 
 ASS.: ..........................................
 
-Período: xx/xx/xxxx até xx/xx/xxxx
+**Período:** xx/xx/xxxx até xx/xx/xxxx
 
 [Aqui você escreve o parágrafo técnico real dessa etapa, com base no escopo. Nunca copie este texto entre colchetes — ele é só uma instrução para você, não deve aparecer na resposta final.]
 
@@ -197,16 +199,17 @@ O campo "ASS.: .........................................." é obrigatório em TO
 ## LISTA FECHADA DE PROCEDIMENTOS (use exatamente estes nomes, nunca invente outro)
 
 - Projeto → "P SGQ 001_Proj_Controle_Proj_Rev.04"
-- Caldeiraria → "P SGQ 01_FAB_Execução_Soldagem_Rev00"
-- Usinagem → "1_P SGQ 01_Usinagem_Rev00"
-- Hidrojato → "P SGQ 15_Exec_Tratamento_Superficie_Pintura_Rev01"
-- Tratamento de Superfície (Pintura) → "P SGQ 16_Fabricação_Insp_Preparo_Superfície_Pintura_Rev00"
-- Teste Hidrostático (dentro de Mecânica/Operações) → "IT OPE 11 - Teste Hidrostático_rev02"
-- Teste de Carga (Divisão Cabo de Aço Teste de Carga) → listar os dois juntos: "IT OPE 05 - Tab_Carga de Trab_Carga de Teste de Tração_Rev01" e "IT OPE 06_Teste_Tração_Carga_Equip_Rev14"
-- Inspeção → "P SGQ 02_FAB_Inspeção_Visual_de_Soldagem_Rev01"
+- Caldeiraria (Produção/Caldeiraria) → "P SGQ 01_FAB_ Execução_Soldagem"
+- Usinagem → "1_P SGQ 01_Usinagem"
+- Hidrojato → "P SGQ 15_Exec_Tratamento_Superficie_Pintura - New Inter / HIDROJATO"
+- Tratamento de Superfície (Pintura) → "P SGQ 16_Fabricação_Insp_Preparo_Superfície_Pintura - New Inter / PINTURA"
+- Teste Hidrostático (dentro de Mecânica/Operações) → "IT OPE 11 - Teste Hidrostático"
+- Teste de Carga (Divisão Cabo de Aço Teste de Carga) → listar juntos: "IT OPE 05 - Tab_Carga de Trab_Carga de Teste de Tração" e "IT OPE 06 - Teste Tração Carga Equip."
+- Confecção de extremidade de cabo de aço / linga (quando o escopo pedir confecção e teste da linga) → "IT OPE 01A - Confecção de Extremidade de Cabo de Aço"
+- Inspeção → "P SGQ 02_FAB_ Inspeção Visual de Soldagem"
+- EPS (Especificação de Procedimento de Soldagem), incluir sempre que houver soldagem na OS (etapa Caldeiraria) → "EPS - Especificação de Procedimento de Soldagem: XXXXX" (placeholder, nunca invente o número real — vai dentro da etapa de Caldeiraria, junto com o campo Procedimento)
 
 Se uma etapa não tiver procedimento correspondente nesta lista, não invente um — apenas omita o campo "Procedimento" para essa etapa.
-
 ## REGRAS POR ETAPA
 
 **Plasma**: etapa separada, incluída apenas quando o escopo mencionar explicitamente corte a plasma. Cobre a execução do corte térmico das chapas/componentes conforme geometria especificada em projeto. Como não há procedimento específico cadastrado para esta etapa na lista fechada, omita o campo "Procedimento" nesta etapa.
