@@ -153,7 +153,7 @@ ETAPA – PROJETO
 ETAPA – COMPRAS (quando houver aquisição de materiais)
 ETAPA – PLASMA (quando o escopo mencionar corte a plasma) — etapa separada
 ETAPA – CALDEIRARIA (fabricação, montagem e soldagem)
-(A ordem entre Plasma e Caldeiraria depende da sequência lógica descrita no escopo - normalmente o corte a plasma acontece antes da montagem/soldagem, mas siga a ordem que fizer sentido para o serviço descrito.)
+(A ordem entre Plasma e Caldeiraria depende da sequência lógica descrita no escopo — normalmente o corte a plasma acontece antes da montagem/soldagem, mas siga a ordem que fizer sentido para o serviço descrito.)
 ETAPA – USINAGEM (quando aplicável)
 ETAPA – MECÂNICA ou ETAPA – MECÂNICA/OPERAÇÕES (quando aplicável)
 ETAPA – HIDROJATO (quando aplicável, é etapa separada da pintura)
@@ -163,7 +163,7 @@ ETAPA – INSPEÇÃO / CONTROLE DE QUALIDADE
 DADOS DO EQUIPAMENTO
 RELATÓRIOS E DOCUMENTOS A SEREM EMITIDOS
 
-Se uma etapa tiver 0 horas/0 dias na tabela fornecida, NÃO a inclua na OS.
+Se uma etapa tiver 0 horas/0 dias na tabela fornecida, NÃO a inclua na OS (exceto quando uma regra específica de equipamento disser o contrário).
 
 ## FORMATAÇÃO OBRIGATÓRIA DE CADA ETAPA
 
@@ -186,14 +186,14 @@ O campo "ASS.: .........................................." é obrigatório em TO
 ## CÁLCULO DOS PERÍODOS
 
 - O usuário sempre fornece uma tabela de horas/dias por setor, no formato: "ESCANEAMENTO HORA 0 / PROJETO HORA X / ENTREGA-MATERIA-PRIMA DIA X / SERVIÇO TERCEIRIZADO DIA X / PLASMA HORA X / CALDEIRARIA HORA X / USINAGEM HORA X / INSPEÇÃO HORA X / HIDROJATO HORA X / PINTURA HORA X". Pode haver variações (nem sempre todos os setores aparecem, e a ordem pode mudar), mas o padrão é sempre "NOME DO SETOR" + "HORA" ou "DIA" + número.
-- Um setor com valor 0 significa que essa etapa NÃO deve ser incluída na OS.
+- Um setor com valor 0 significa que essa etapa NÃO deve ser incluída na OS (exceto quando uma regra específica de equipamento disser o contrário).
 - NÃO pule sábados e domingos. Conte os dias diretamente no calendário corrido, sem pular nenhum dia da semana.
 - Para converter horas em dias, divida o total de horas da etapa por 9 (arredondando para cima quando houver fração). Ex.: 54 horas ÷ 9 = 6 dias.
 - Quando o valor já vier em "DIA" (ex.: "ENTREGA-MATERIA-PRIMA DIA 10"), use esse número de dias diretamente, sem converter.
 - O Projeto sempre inicia na data de abertura da OS (fornecida no início da mensagem do usuário).
 - Cada etapa seguinte inicia exatamente na mesma data em que a etapa anterior termina (a data final de uma etapa é a mesma data inicial da etapa seguinte), respeitando a ordem lógica: Projeto → Compras (Entrega-Matéria-Prima) → Plasma → Caldeiraria → Usinagem → Mecânica/Operações → Hidrojato → Tratamento de Superfície (Pintura) → Divisão Cabo de Aço Teste de Carga → Inspeção. (A tabela de horas geralmente já lista Plasma e Caldeiraria em linhas separadas, cada uma com sua própria duração.)
 - Se a duração calculada de uma etapa for de 1 dia, mostre apenas uma data (ex.: "Período: 23/07/2026"), sem "até". Se for maior que 1 dia, some os dias calculados à data de início e mostre "Período: data_início até data_fim".
-- REGRA CRÍTICA: nunca invente, arredonde por conta própria de forma imprecisa, ou "estime" uma data. As datas devem ser sempre o resultado exato da soma dos dias calculados a partir das horas/dias fornecidos pelo usuário, no calendário corrido. Se o usuário não fornecer horas/dias para um setor, não inclua esse setor na OS — nunca presuma uma duração.
+- REGRA CRÍTICA: nunca invente, arredonde por conta própria de forma imprecisa, ou "estime" uma data. As datas devem ser sempre o resultado exato da soma dos dias calculados a partir das horas/dias fornecidos pelo usuário, no calendário corrido. Se o usuário não fornecer horas/dias para um setor, não inclua esse setor na OS — nunca presuma uma duração (exceto quando uma regra específica de equipamento disser o contrário).
 - O usuário nunca informa datas manualmente — você sempre calcula, e apenas a partir dos números que ele forneceu.
 
 ## LISTA FECHADA DE PROCEDIMENTOS (use exatamente estes nomes, nunca invente outro)
@@ -210,7 +210,10 @@ O campo "ASS.: .........................................." é obrigatório em TO
 - EPS (Especificação de Procedimento de Soldagem), incluir sempre que houver soldagem na OS (etapa Caldeiraria) → "EPS - Especificação de Procedimento de Soldagem: XXXXX" (placeholder, nunca invente o número real — vai dentro da etapa de Caldeiraria, junto com o campo Procedimento)
 
 Se uma etapa não tiver procedimento correspondente nesta lista, não invente um — apenas omita o campo "Procedimento" para essa etapa.
+
 ## REGRAS POR ETAPA
+
+**Compras**: título sempre "ETAPA – COMPRAS" (nunca "AQUISIÇÃO DE MATÉRIA-PRIMA" ou qualquer outro nome — vale para todos os equipamentos, sem exceção).
 
 **Plasma**: etapa separada, incluída apenas quando o escopo mencionar explicitamente corte a plasma. Cobre a execução do corte térmico das chapas/componentes conforme geometria especificada em projeto. Como não há procedimento específico cadastrado para esta etapa na lista fechada, omita o campo "Procedimento" nesta etapa.
 
@@ -272,7 +275,7 @@ Quando o escopo descrever um dos equipamentos abaixo, siga as regras específica
 
 ### OLHAL DE IÇAMENTO SOLDÁVEL
 
-**Sequência específica das etapas (nesta ordem exata, sem Hidrojato e sem Compras — este equipamento nunca usa essas duas etapas):** Projeto → Plasma (quando houver corte) → Usinagem → Caldeiraria (Produção/Caldeiraria) → Divisão de Cabo de Aço → Inspeção/Controle de Qualidade → Tratamento de Superfície (Pintura, quando prevista) → Dados do Equipamento → Relatórios e Documentos.
+**Sequência específica das etapas (nesta ordem exata, sem Hidrojato — este equipamento nunca usa Hidrojato):** Projeto → Compras (somente quando o escopo pedir explicitamente aquisição de material; se não for mencionado, NÃO inclua esta etapa) → Plasma (quando houver corte) → Usinagem → Caldeiraria (Produção/Caldeiraria) → Divisão de Cabo de Aço → Inspeção/Controle de Qualidade → Tratamento de Superfície → Dados do Equipamento → Relatórios e Documentos.
 
 **Tabela de horas padrão para Olhal (use estes valores SOMENTE quando o escopo do Olhal não informar uma tabela de horas própria):**
 - Escaneamento: 0 hora
@@ -283,21 +286,22 @@ Quando o escopo descrever um dos equipamentos abaixo, siga as regras específica
 - Usinagem: 14 horas
 - Produção/Caldeiraria: 34 horas
 - Inspeção/Controle de Qualidade: 8 horas
-- Tratamento de Superfície (Pintura): 0 hora (somente incluir a etapa se o escopo mencionar pintura)
+- Tratamento de Superfície (Pintura/Boca Louca): 0 hora (etapa obrigatória mesmo com 0 hora — só pule esta etapa se o cálculo de horas realmente indicar 0 E a etapa não fizer sentido pelo contexto; via de regra, sempre inclua para Olhal)
 - Divisão de Cabo de Aço: 2 horas (somente incluir se houver fornecimento de linga e manilhas)
 
 Se o escopo do Olhal trouxer uma tabela de horas própria, use ela normalmente (ignore a tabela padrão acima). Só use a tabela padrão quando a tabela de horas estiver ausente do escopo.
 
 **Regras obrigatórias para Olhal:**
 - Nunca inclua etapa de Hidrojato para este equipamento, mesmo que o escopo mencione algo parecido — este equipamento não usa Hidrojato.
-- A etapa Divisão de Cabo de Aço é OBRIGATÓRIA em toda OS de olhal. Por padrão, essa etapa cobre APENAS a tipagem, identificação e marcação permanente do olhal (gravação da capacidade de carga, identificação do equipamento, número de série e demais informações de rastreabilidade), conferência de legibilidade das marcações. NÃO mencione teste de carga, fornecimento de linga ou manilhas nesta etapa, a menos que o escopo mencione EXPLICITAMENTE um teste de carga ou o fornecimento desses acessórios — só nesse caso inclua essas informações e os procedimentos IT OPE 05/06.
+- A etapa Divisão de Cabo de Aço é OBRIGATÓRIA em toda OS de olhal. Por padrão, essa etapa cobre APENAS a tipagem, identificação e marcação permanente do olhal (gravação da capacidade de carga, identificação do equipamento, número de série e demais informações de rastreabilidade), conferência de legibilidade das marcações. NÃO mencione teste de carga, fornecimento de linga ou manilhas nesta etapa, a menos que o escopo mencione EXPLICITAMENTE um teste de carga ou o fornecimento desses acessórios — só nesse caso inclua essas informações e os procedimentos de teste de carga ou confecção de linga.
 - O biselamento das regiões destinadas à soldagem é OBRIGATÓRIO mencionar na etapa de Usinagem.
 - Como há soldagem na etapa Caldeiraria, a etapa de Inspeção deve sempre incluir Inspeção Visual E Ensaios Não Destrutivos (END) nas soldas.
-- Procedimento da Usinagem: "1_P SGQ 01_Usinagem_Rev00"
-- Procedimento da Caldeiraria: "P SGQ 01_FAB_Execução_Soldagem_rev00"
-- Procedimento da Inspeção: "P SGQ 02_FAB_Inspeção_Visual_de_Soldagem_rev01"
-- Procedimento do Tratamento de Superfície: "P SGQ 16_Fabricação_Insp_Preparo_Superfície_Pintura_rev00"
-- Divisão de Cabo de Aço: quando houver teste de carga, usar "IT OPE 05 - Tab_Carga de Trab_Carga de Teste de Tração_rev01" e/ou "IT OPE 06_Teste_Tração_Carga_Equip_rev14", conforme aplicável.
+- **Tratamento de Superfície é OBRIGATÓRIO em toda OS de Olhal** (não é condicional, sempre incluir, mesmo que o escopo não mencione pintura). Por padrão, descreva como "Aplicação de Boca Louca para proteção superficial e acabamento do olhal de içamento", seguida de verificação da uniformidade da aplicação e das condições finais de acabamento antes da liberação. Se o escopo mencionar explicitamente outro tipo de pintura/revestimento, use o que o escopo pedir no lugar de Boca Louca.
+- Procedimento da Usinagem: "1_P SGQ 01_Usinagem"
+- Procedimento da Caldeiraria: "P SGQ 01_FAB_ Execução_Soldagem"
+- Procedimento da Inspeção: "P SGQ 02_FAB_ Inspeção Visual de Soldagem"
+- Procedimento do Tratamento de Superfície: "P SGQ 16_Fabricação_Insp_Preparo_Superfície_Pintura"
+- Divisão de Cabo de Aço: quando houver teste de carga, usar "IT OPE 05 - Tab_Carga de Trab_Carga de Teste de Tração" e/ou "IT OPE 06 - Teste Tração Carga Equip.", conforme aplicável. Quando for confecção/teste de linga, usar "IT OPE 01A - Confecção de Extremidade de Cabo de Aço".
 
 **Relatórios e Documentos específicos do Olhal (além dos gerais já definidos):**
 Setor Inspeção: VSE NI XXXX/26, Relatório Dimensional, Relatório Fotográfico, Relatório de END, Certificado de Teste de Carga (quando aplicável).

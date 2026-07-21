@@ -9,9 +9,10 @@ function escaparHTML(texto) {
 function formatarResultado(texto) {
 
     const escapado = escaparHTML(texto);
-    const linhas = escapado.split("\n");
+    const linhas = escapado.split("\n").map(l => l.trim());
     let html = "";
     let dentroDeLista = false;
+    let ultimaFoiVazia = true;
 
     const titulosSecao = ["DADOS DO EQUIPAMENTO", "RELATÓRIOS E DOCUMENTOS A SEREM EMITIDOS"];
 
@@ -31,19 +32,23 @@ function formatarResultado(texto) {
                 dentroDeLista = true;
             }
             html += `<li>${linhaLimpa.replace(/^-\s+/, "")}</li>`;
+            ultimaFoiVazia = false;
         } else {
             if (dentroDeLista) {
                 html += "</ul>";
                 dentroDeLista = false;
             }
             if (linhaLimpa === "") {
-                html += "<p></p>";
+                ultimaFoiVazia = true;
             } else if (ehEtapa) {
                 html += `<h3 class="etapa-titulo">${textoSemNegrito}</h3>`;
+                ultimaFoiVazia = false;
             } else if (ehTituloSecao) {
                 html += `<h3 class="secao-titulo">${textoSemNegrito}</h3>`;
+                ultimaFoiVazia = false;
             } else {
                 html += `<p>${linhaLimpa}</p>`;
+                ultimaFoiVazia = false;
             }
         }
 
@@ -56,6 +61,8 @@ function formatarResultado(texto) {
     return html;
 
 }
+
+
 
 const botaoLogin = document.getElementById("botaoLogin");
 
