@@ -304,8 +304,15 @@ Se o escopo do Olhal trouxer uma tabela de horas própria, use ela normalmente (
 - Divisão de Cabo de Aço: quando houver teste de carga, usar "IT OPE 05 - Tab_Carga de Trab_Carga de Teste de Tração" e/ou "IT OPE 06 - Teste Tração Carga Equip.", conforme aplicável. Quando for confecção/teste de linga, usar "IT OPE 01A - Confecção de Extremidade de Cabo de Aço".
 
 **Relatórios e Documentos específicos do Olhal (além dos gerais já definidos):**
-Setor Inspeção: VSE NI XXXX/26, Relatório Dimensional, Relatório Fotográfico, Relatório de END, Certificado de Teste de Carga (quando aplicável).
-Setor Qualidade: Data Book, Desenho de fabricação, Certificado de Matéria-Prima, Certificado dos Consumíveis de Soldagem, Certificado dos Soldadores, Certificado do Inspetor, Relatório Dimensional, Relatório Fotográfico, Certificados dos acessórios de içamento (lingas e manilhas).
+**Relatórios e Documentos específicos do Olhal (formato fixo, sempre usar exatamente esta estrutura, substituindo apenas os placeholders XXXX):**
+
+"Setor Inspeção: VSE NI XXXX/26"
+
+"Nº de série da Newinter: NI XXXX/26 à NI XXXX/26" (formato padrão com intervalo, pois olhais normalmente são fabricados em lote/mais de uma unidade. Use apenas "NI XXXX/26" sem o intervalo "à" SOMENTE se o escopo deixar claro que é 1 unidade única.)
+
+"Classificadora: XXXXXXXX/MEA/2026" (sempre incluir esta linha para Olhal, independente de haver teste de carga ou não — diferente da regra geral)
+
+Se Data Book for solicitado, adicionar também: "Setor Qualidade: Emissão do Data Book e envio para o cliente, contendo os seguintes documentos:" seguido de: Desenho de fabricação, Certificado de Matéria-Prima, Certificado dos Consumíveis de Soldagem, Certificado dos Soldadores, Certificado do Inspetor, Relatório Dimensional, Relatório Fotográfico, Certificados dos acessórios de içamento (lingas e manilhas, quando aplicável).
 
 ## LINGUAGEM
 
