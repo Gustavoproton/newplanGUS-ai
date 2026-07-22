@@ -296,6 +296,7 @@ Se o escopo do Olhal trouxer uma tabela de horas própria, use ela normalmente (
 - A etapa Divisão de Cabo de Aço é OBRIGATÓRIA em toda OS de olhal. Por padrão, essa etapa cobre APENAS a tipagem, identificação e marcação permanente do olhal (gravação da capacidade de carga, identificação do equipamento, número de série e demais informações de rastreabilidade), conferência de legibilidade das marcações. NÃO mencione teste de carga, fornecimento de linga ou manilhas nesta etapa, a menos que o escopo mencione EXPLICITAMENTE um teste de carga ou o fornecimento desses acessórios — só nesse caso inclua essas informações e os procedimentos de teste de carga ou confecção de linga.
 - O biselamento das regiões destinadas à soldagem é OBRIGATÓRIO mencionar na etapa de Usinagem.
 - Como há soldagem na etapa Caldeiraria, a etapa de Inspeção deve sempre incluir Inspeção Visual E Ensaios Não Destrutivos (END) nas soldas.
+- NUNCA inclua o campo "EPS - Especificação de Procedimento de Soldagem" nas OS de Olhal (esse documento não se aplica a este equipamento).
 - **Tratamento de Superfície é OBRIGATÓRIO em toda OS de Olhal** (não é condicional, sempre incluir, mesmo que o escopo não mencione pintura). Por padrão, descreva como "Aplicação de Boca Louca para proteção superficial e acabamento do olhal de içamento", seguida de verificação da uniformidade da aplicação e das condições finais de acabamento antes da liberação. Se o escopo mencionar explicitamente outro tipo de pintura/revestimento, use o que o escopo pedir no lugar de Boca Louca.
 - Procedimento da Usinagem: "1_P SGQ 01_Usinagem"
 - Procedimento da Caldeiraria: "P SGQ 01_FAB_ Execução_Soldagem"
@@ -304,6 +305,12 @@ Se o escopo do Olhal trouxer uma tabela de horas própria, use ela normalmente (
 - Divisão de Cabo de Aço: quando houver teste de carga, usar "IT OPE 05 - Tab_Carga de Trab_Carga de Teste de Tração" e/ou "IT OPE 06 - Teste Tração Carga Equip.", conforme aplicável. Quando for confecção/teste de linga, usar "IT OPE 01A - Confecção de Extremidade de Cabo de Aço".
 
 **Relatórios e Documentos específicos do Olhal (além dos gerais já definidos):**
+**Dados do Equipamento específico do Olhal (formato fixo, sempre nesta ordem e com estes rótulos exatos):**
+"Equipamento: Olhal de Içamento Soldável"
+"Padrão: [nome do padrão informado no escopo, ex.: New Inter x Constellation]"
+"Material: [material informado no escopo, ex.: Aço Carbono ASTM A36]"
+"Capacidade de Carga: [capacidade informada no escopo, ex.: 2.000 kg (2,0 ton)]"
+"Processos Envolvidos: Projeto, Produção/Plasma/Caldeiraria, Usinagem, Divisão de Cabo de Aço, Tratamento de Superfície e Inspeção / Controle de Qualidade." (ajuste esta lista removendo algum processo que não tenha sido usado nesta OS específica, ex.: se não houve Plasma, escreva apenas "Produção/Caldeiraria")
 **Relatórios e Documentos específicos do Olhal (formato fixo, sempre usar exatamente esta estrutura, substituindo apenas os placeholders XXXX):**
 
 "Setor Inspeção: VSE NI XXXX/26"
