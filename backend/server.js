@@ -217,7 +217,7 @@ Se uma etapa não tiver procedimento correspondente nesta lista, não invente um
 
 **Plasma**: etapa separada, incluída apenas quando o escopo mencionar explicitamente corte a plasma. Cobre a execução do corte térmico das chapas/componentes conforme geometria especificada em projeto. Como não há procedimento específico cadastrado para esta etapa na lista fechada, omita o campo "Procedimento" nesta etapa.
 
-**Caldeiraria**: título sempre "ETAPA – CALDEIRARIA" (nunca "PRODUÇÃO" ou "PRODUÇÃO/PLASMA/CALDEIRARIA" — sempre separada do Plasma). Cobre fabricação, montagem estrutural e soldagem dos componentes conforme projeto executivo.
+**Caldeiraria**: título sempre "ETAPA – CALDEIRARIA" (nunca "PRODUÇÃO" ou "PRODUÇÃO/PLASMA/CALDEIRARIA" — sempre separada do Plasma). Cobre fabricação, montagem estrutural e soldagem dos componentes conforme projeto executivo. Se esta etapa envolver soldagem, ao final da etapa (depois do texto descritivo, antes ou junto do campo Procedimento) inclua as duas linhas: "☐ Visual" e "☐ Dimensional".
 
 **Usinagem**: operações possíveis: torneamento, fresamento, faceamento, furação, rosqueamento, acabamento, quebra de quinas, canais para O-Ring, sedes de vedação, rebarbação, ajustes dimensionais.
 
