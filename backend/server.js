@@ -157,9 +157,10 @@ ETAPA – CALDEIRARIA (fabricação, montagem e soldagem)
 ETAPA – USINAGEM (quando aplicável)
 ETAPA – MECÂNICA ou ETAPA – MECÂNICA/OPERAÇÕES (quando aplicável)
 ETAPA – HIDROJATO (quando aplicável, é etapa separada da pintura)
-ETAPA – TRATAMENTO DE SUPERFÍCIE (significa SOMENTE pintura, nunca hidrojato)
-ETAPA – DIVISÃO CABO DE AÇO TESTE DE CARGA (somente quando houver conjunto de içamento com teste de carga)
 ETAPA – INSPEÇÃO / CONTROLE DE QUALIDADE
+ETAPA – DIVISÃO CABO DE AÇO TESTE DE CARGA (somente quando houver conjunto de içamento com teste de carga)
+ETAPA – TRATAMENTO DE SUPERFÍCIE (significa SOMENTE pintura, nunca hidrojato)
+
 DADOS DO EQUIPAMENTO
 RELATÓRIOS E DOCUMENTOS A SEREM EMITIDOS
 
@@ -225,11 +226,11 @@ Se uma etapa não tiver procedimento correspondente nesta lista, não invente um
 
 **Hidrojato**: etapa independente, nunca faz parte da pintura. Cobre remoção de oxidações, impurezas, carepas de laminação e contaminantes, preparando a superfície para a pintura.
 
-**Tratamento de Superfície**: significa somente pintura. Nunca inserir hidrojato aqui. Descreva o esquema de pintura conforme especificado no escopo (número de demãos, tipo de tinta, cor, espessura em μm), e a verificação de espessura seca, aderência e uniformidade do acabamento.
+**Inspeção**: executa inspeção visual, inspeção dimensional, Ensaios Não Destrutivos (END) quando aplicável, acompanhamento de testes, emissão de registros e liberação do equipamento. Mencionar sempre que a inspeção visual (e END, quando houver) é realizada por profissional qualificado pelo Sistema Nacional de Qualificação e Certificação – SNQC/ASNT. Se houver teste executado pela Mecânica ou pela Divisão Cabo de Aço, a Inspeção apenas acompanha (não executa o teste).
 
 **Divisão Cabo de Aço Teste de Carga**: incluir apenas quando houver conjunto de içamento (lingas, manilhas, cabos de aço) com teste de carga estática. Detalhar a carga de teste (capacidade nominal × fator de segurança, ex.: 2.500 kg × 1,5 = 3.750 kg), monitoramento de deformações, estabilidade estrutural e funcionamento dos pontos de içamento. Emissão do certificado de teste de carga.
 
-**Inspeção**: executa inspeção visual, inspeção dimensional, Ensaios Não Destrutivos (END) quando aplicável, acompanhamento de testes, emissão de registros e liberação do equipamento. Mencionar sempre que a inspeção visual (e END, quando houver) é realizada por profissional qualificado pelo Sistema Nacional de Qualificação e Certificação – SNQC/ASNT. Se houver teste executado pela Mecânica ou pela Divisão Cabo de Aço, a Inspeção apenas acompanha (não executa o teste).
+**Tratamento de Superfície**: significa somente pintura. Nunca inserir hidrojato aqui. Descreva o esquema de pintura conforme especificado no escopo (número de demãos, tipo de tinta, cor, espessura em μm), e a verificação de espessura seca, aderência e uniformidade do acabamento.
 
 **Classificadora**: inserir a linha "Classificadora: BXXXXXXX/MEA/26" (placeholder, nunca invente o número real) sempre que houver teste de carga, hidrostático, pneumático ou qualquer teste acompanhado por classificadora. Caso contrário, não inserir.
 
@@ -275,7 +276,7 @@ Quando o escopo descrever um dos equipamentos abaixo, siga as regras específica
 
 ### OLHAL DE IÇAMENTO SOLDÁVEL
 
-**Sequência específica das etapas (nesta ordem exata, sem Hidrojato — este equipamento nunca usa Hidrojato):** Projeto → Compras (somente quando o escopo pedir explicitamente aquisição de material; se não for mencionado, NÃO inclua esta etapa) → Plasma (quando houver corte) → Usinagem → Caldeiraria (Produção/Caldeiraria) → Divisão de Cabo de Aço → Inspeção/Controle de Qualidade → Tratamento de Superfície → Dados do Equipamento → Relatórios e Documentos.
+**Sequência específica das etapas (nesta ordem exata, sem Hidrojato — este equipamento nunca usa Hidrojato):** Projeto → Compras (somente quando o escopo pedir explicitamente aquisição de material; se não for mencionado, NÃO inclua esta etapa) → Plasma (quando houver corte) → Usinagem → Caldeiraria (Produção/Caldeiraria) → Inspeção/Controle de Qualidade → Divisão de Cabo de Aço → Tratamento de Superfície → Dados do Equipamento → Relatórios e Documentos.
 
 **Tabela de horas padrão para Olhal (use estes valores SOMENTE quando o escopo do Olhal não informar uma tabela de horas própria):**
 - Escaneamento: 0 hora
