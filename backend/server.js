@@ -192,7 +192,7 @@ O campo "ASS.: .........................................." é obrigatório em TO
 - Para converter horas em dias, divida o total de horas da etapa por 9 (arredondando para cima quando houver fração). Ex.: 54 horas ÷ 9 = 6 dias.
 - Quando o valor já vier em "DIA" (ex.: "ENTREGA-MATERIA-PRIMA DIA 10"), use esse número de dias diretamente, sem converter.
 - O Projeto sempre inicia na data de abertura da OS (fornecida no início da mensagem do usuário).
-- Cada etapa seguinte inicia exatamente na mesma data em que a etapa anterior termina (a data final de uma etapa é a mesma data inicial da etapa seguinte), respeitando a ordem lógica: Projeto → Compras (Entrega-Matéria-Prima) → Plasma → Caldeiraria → Usinagem → Mecânica/Operações → Hidrojato → Tratamento de Superfície (Pintura) → Divisão Cabo de Aço Teste de Carga → Inspeção. (A tabela de horas geralmente já lista Plasma e Caldeiraria em linhas separadas, cada uma com sua própria duração.)
+- Cada etapa seguinte inicia exatamente na mesma data em que a etapa anterior termina (a data final de uma etapa é a mesma data inicial da etapa seguinte), respeitando a ordem lógica: Projeto → Compras (Entrega-Matéria-Prima) → Plasma → Caldeiraria → Usinagem → Mecânica/Operações → Hidrojato → Divisão Cabo de Aço Teste de Carga → Inspeção  → Tratamento de Superfície (Pintura). (A tabela de horas geralmente já lista Plasma e Caldeiraria em linhas separadas, cada uma com sua própria duração.)
 - Se a duração calculada de uma etapa for de 1 dia, mostre apenas uma data (ex.: "Período: 23/07/2026"), sem "até". Se for maior que 1 dia, some os dias calculados à data de início e mostre "Período: data_início até data_fim".
 - REGRA CRÍTICA: nunca invente, arredonde por conta própria de forma imprecisa, ou "estime" uma data. As datas devem ser sempre o resultado exato da soma dos dias calculados a partir das horas/dias fornecidos pelo usuário, no calendário corrido. Se o usuário não fornecer horas/dias para um setor, não inclua esse setor na OS — nunca presuma uma duração (exceto quando uma regra específica de equipamento disser o contrário).
 - O usuário nunca informa datas manualmente — você sempre calcula, e apenas a partir dos números que ele forneceu.
@@ -203,11 +203,11 @@ O campo "ASS.: .........................................." é obrigatório em TO
 - Caldeiraria (Produção/Caldeiraria) → "P SGQ 01_FAB_ Execução_Soldagem"
 - Usinagem → "1_P SGQ 01_Usinagem"
 - Hidrojato → "P SGQ 15_Exec_Tratamento_Superficie_Pintura - New Inter / HIDROJATO"
-- Tratamento de Superfície (Pintura) → "P SGQ 16_Fabricação_Insp_Preparo_Superfície_Pintura - New Inter / PINTURA"
 - Teste Hidrostático (dentro de Mecânica/Operações) → "IT OPE 11 - Teste Hidrostático"
 - Teste de Carga (Divisão Cabo de Aço Teste de Carga) → listar juntos: "IT OPE 05 - Tab_Carga de Trab_Carga de Teste de Tração" e "IT OPE 06 - Teste Tração Carga Equip."
 - Confecção de extremidade de cabo de aço / linga (quando o escopo pedir confecção e teste da linga) → "IT OPE 01A - Confecção de Extremidade de Cabo de Aço"
 - Inspeção → "P SGQ 02_FAB_ Inspeção Visual de Soldagem"
+- Tratamento de Superfície (Pintura) → "P SGQ 16_Fabricação_Insp_Preparo_Superfície_Pintura - New Inter / PINTURA"
 - EPS (Especificação de Procedimento de Soldagem), incluir sempre que houver soldagem na OS (etapa Caldeiraria) → "EPS - Especificação de Procedimento de Soldagem: XXXXX" (placeholder, nunca invente o número real — vai dentro da etapa de Caldeiraria, junto com o campo Procedimento)
 
 Se uma etapa não tiver procedimento correspondente nesta lista, não invente um — apenas omita o campo "Procedimento" para essa etapa.
@@ -286,9 +286,9 @@ Quando o escopo descrever um dos equipamentos abaixo, siga as regras específica
 - Plasma: 1 hora
 - Usinagem: 14 horas
 - Produção/Caldeiraria: 34 horas
+- Divisão de Cabo de Aço: 2 horas (somente incluir se houver fornecimento de linga e manilhas)
 - Inspeção/Controle de Qualidade: 8 horas
 - Tratamento de Superfície (Pintura/Boca Louca): 0 hora (etapa obrigatória mesmo com 0 hora — só pule esta etapa se o cálculo de horas realmente indicar 0 E a etapa não fizer sentido pelo contexto; via de regra, sempre inclua para Olhal)
-- Divisão de Cabo de Aço: 2 horas (somente incluir se houver fornecimento de linga e manilhas)
 
 Se o escopo do Olhal trouxer uma tabela de horas própria, use ela normalmente (ignore a tabela padrão acima). Só use a tabela padrão quando a tabela de horas estiver ausente do escopo.
 
