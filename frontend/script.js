@@ -12,7 +12,6 @@ function formatarResultado(texto) {
     const linhas = escapado.split("\n").map(l => l.trim());
     let html = "";
     let dentroDeLista = false;
-    let ultimaFoiVazia = true;
 
     const titulosSecao = ["DADOS DO EQUIPAMENTO", "RELATÓRIOS E DOCUMENTOS A SEREM EMITIDOS"];
 
@@ -32,23 +31,19 @@ function formatarResultado(texto) {
                 dentroDeLista = true;
             }
             html += `<li>${linhaLimpa.replace(/^-\s+/, "")}</li>`;
-            ultimaFoiVazia = false;
         } else {
             if (dentroDeLista) {
                 html += "</ul>";
                 dentroDeLista = false;
             }
             if (linhaLimpa === "") {
-                ultimaFoiVazia = true;
+                // não gera parágrafo vazio, só marca quebra
             } else if (ehEtapa) {
                 html += `<h3 class="etapa-titulo">${textoSemNegrito}</h3>`;
-                ultimaFoiVazia = false;
             } else if (ehTituloSecao) {
                 html += `<h3 class="secao-titulo">${textoSemNegrito}</h3>`;
-                ultimaFoiVazia = false;
             } else {
                 html += `<p>${linhaLimpa}</p>`;
-                ultimaFoiVazia = false;
             }
         }
 
@@ -62,7 +57,7 @@ function formatarResultado(texto) {
 
 }
 
-
+// ---------- LOGIN ----------
 
 const botaoLogin = document.getElementById("botaoLogin");
 
@@ -115,6 +110,8 @@ if (botaoLogin) {
     });
 
 }
+
+// ---------- CADASTRO ----------
 
 const botaoRegistrar = document.getElementById("botaoRegistrar");
 
@@ -171,6 +168,8 @@ if (botaoRegistrar) {
 
 }
 
+// ---------- PROTEÇÃO DA PÁGINA DO GERADOR ----------
+
 const gerar = document.getElementById("gerar");
 
 if (gerar) {
@@ -193,6 +192,10 @@ if (gerar) {
 
         resultado.innerHTML = "<p>Gerando OS...</p>";
         gerar.disabled = true;
+
+        // esconde o VBA de uma geração anterior, se houver
+        const vbaContainerReset = document.getElementById("vbaContainer");
+        if (vbaContainerReset) vbaContainerReset.style.display = "none";
 
         try {
 
@@ -230,6 +233,8 @@ if (gerar) {
 
 }
 
+// ---------- COPIAR OS (com formatação) ----------
+
 const copiar = document.getElementById("copiar");
 
 if (copiar) {
@@ -259,6 +264,84 @@ if (copiar) {
             });
 
         }
+
+    });
+
+}
+
+// ---------- GERAR CÓDIGO VBA (OPCIONAL) ----------
+
+const gerarVba = document.getElementById("gerarVba");
+
+if (gerarVba) {
+
+    gerarVba.addEventListener("click", async () => {
+
+        const resultado = document.getElementById("resultado");
+        const texto = resultado.innerText;
+        const vbaContainer = document.getElementById("vbaContainer");
+        const vbaResultado = document.getElementById("vbaResultado");
+
+        if (!texto || texto.trim() === "" || texto.includes("Gerando OS")) {
+            alert("Gere a OS primeiro antes de criar o código VBA.");
+            return;
+        }
+
+        vbaContainer.style.display = "block";
+        vbaResultado.textContent = "Gerando código VBA...";
+        gerarVba.disabled = true;
+
+        try {
+
+            const resposta = await fetch(`${BACKEND_URL}/gerar-vba`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("gustech_token")}`
+                },
+                body: JSON.stringify({ osTexto: texto })
+            });
+
+            if (resposta.status === 401) {
+                alert("Sua sessão expirou. Faça login novamente.");
+                localStorage.removeItem("gustech_token");
+                window.location.href = "login.html";
+                return;
+            }
+
+            const dados = await resposta.json();
+
+            if (dados.erro) {
+                vbaResultado.textContent = "Erro: " + dados.erro;
+            } else {
+                vbaResultado.textContent = dados.resultado;
+            }
+
+        } catch (erro) {
+            vbaResultado.textContent = "Não foi possível conectar ao servidor.";
+        } finally {
+            gerarVba.disabled = false;
+        }
+
+    });
+
+}
+
+// ---------- COPIAR CÓDIGO VBA ----------
+
+const copiarVba = document.getElementById("copiarVba");
+
+if (copiarVba) {
+
+    copiarVba.addEventListener("click", () => {
+
+        const vbaResultado = document.getElementById("vbaResultado");
+
+        navigator.clipboard.writeText(vbaResultado.textContent).then(() => {
+            alert("Código VBA copiado! Cole no editor do VBA (Alt+F11).");
+        }).catch(() => {
+            alert("Não foi possível copiar. Selecione o texto manualmente.");
+        });
 
     });
 

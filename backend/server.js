@@ -157,10 +157,9 @@ ETAPA – CALDEIRARIA (fabricação, montagem e soldagem)
 ETAPA – USINAGEM (quando aplicável)
 ETAPA – MECÂNICA ou ETAPA – MECÂNICA/OPERAÇÕES (quando aplicável)
 ETAPA – HIDROJATO (quando aplicável, é etapa separada da pintura)
-ETAPA – INSPEÇÃO / CONTROLE DE QUALIDADE
-ETAPA – DIVISÃO CABO DE AÇO TESTE DE CARGA (somente quando houver conjunto de içamento com teste de carga)
 ETAPA – TRATAMENTO DE SUPERFÍCIE (significa SOMENTE pintura, nunca hidrojato)
-
+ETAPA – DIVISÃO CABO DE AÇO TESTE DE CARGA (somente quando houver conjunto de içamento com teste de carga)
+ETAPA – INSPEÇÃO / CONTROLE DE QUALIDADE
 DADOS DO EQUIPAMENTO
 RELATÓRIOS E DOCUMENTOS A SEREM EMITIDOS
 
@@ -184,6 +183,8 @@ XXXXXXXXXXXX
 
 O campo "ASS.: .........................................." é obrigatório em TODAS as etapas.
 
+NUNCA insira linhas separadoras como "---", "___", "***" ou qualquer marcação de divisão entre as etapas. O título de cada etapa em negrito já serve como separação visual suficiente.
+
 ## CÁLCULO DOS PERÍODOS
 
 - O usuário sempre fornece uma tabela de horas/dias por setor, no formato: "ESCANEAMENTO HORA 0 / PROJETO HORA X / ENTREGA-MATERIA-PRIMA DIA X / SERVIÇO TERCEIRIZADO DIA X / PLASMA HORA X / CALDEIRARIA HORA X / USINAGEM HORA X / INSPEÇÃO HORA X / HIDROJATO HORA X / PINTURA HORA X". Pode haver variações (nem sempre todos os setores aparecem, e a ordem pode mudar), mas o padrão é sempre "NOME DO SETOR" + "HORA" ou "DIA" + número.
@@ -192,7 +193,7 @@ O campo "ASS.: .........................................." é obrigatório em TO
 - Para converter horas em dias, divida o total de horas da etapa por 9 (arredondando para cima quando houver fração). Ex.: 54 horas ÷ 9 = 6 dias.
 - Quando o valor já vier em "DIA" (ex.: "ENTREGA-MATERIA-PRIMA DIA 10"), use esse número de dias diretamente, sem converter.
 - O Projeto sempre inicia na data de abertura da OS (fornecida no início da mensagem do usuário).
-- Cada etapa seguinte inicia exatamente na mesma data em que a etapa anterior termina (a data final de uma etapa é a mesma data inicial da etapa seguinte), respeitando a ordem lógica: Projeto → Compras (Entrega-Matéria-Prima) → Plasma → Caldeiraria → Usinagem → Mecânica/Operações → Hidrojato → Divisão Cabo de Aço Teste de Carga → Inspeção  → Tratamento de Superfície (Pintura). (A tabela de horas geralmente já lista Plasma e Caldeiraria em linhas separadas, cada uma com sua própria duração.)
+- Cada etapa seguinte inicia exatamente na mesma data em que a etapa anterior termina (a data final de uma etapa é a mesma data inicial da etapa seguinte), respeitando a ordem lógica: Projeto → Compras (Entrega-Matéria-Prima) → Plasma → Caldeiraria → Usinagem → Mecânica/Operações → Hidrojato → Tratamento de Superfície (Pintura) → Divisão Cabo de Aço Teste de Carga → Inspeção. (A tabela de horas geralmente já lista Plasma e Caldeiraria em linhas separadas, cada uma com sua própria duração.)
 - Se a duração calculada de uma etapa for de 1 dia, mostre apenas uma data (ex.: "Período: 23/07/2026"), sem "até". Se for maior que 1 dia, some os dias calculados à data de início e mostre "Período: data_início até data_fim".
 - REGRA CRÍTICA: nunca invente, arredonde por conta própria de forma imprecisa, ou "estime" uma data. As datas devem ser sempre o resultado exato da soma dos dias calculados a partir das horas/dias fornecidos pelo usuário, no calendário corrido. Se o usuário não fornecer horas/dias para um setor, não inclua esse setor na OS — nunca presuma uma duração (exceto quando uma regra específica de equipamento disser o contrário).
 - O usuário nunca informa datas manualmente — você sempre calcula, e apenas a partir dos números que ele forneceu.
@@ -203,11 +204,11 @@ O campo "ASS.: .........................................." é obrigatório em TO
 - Caldeiraria (Produção/Caldeiraria) → "P SGQ 01_FAB_ Execução_Soldagem"
 - Usinagem → "1_P SGQ 01_Usinagem"
 - Hidrojato → "P SGQ 15_Exec_Tratamento_Superficie_Pintura - New Inter / HIDROJATO"
+- Tratamento de Superfície (Pintura) → "P SGQ 16_Fabricação_Insp_Preparo_Superfície_Pintura - New Inter / PINTURA"
 - Teste Hidrostático (dentro de Mecânica/Operações) → "IT OPE 11 - Teste Hidrostático"
 - Teste de Carga (Divisão Cabo de Aço Teste de Carga) → listar juntos: "IT OPE 05 - Tab_Carga de Trab_Carga de Teste de Tração" e "IT OPE 06 - Teste Tração Carga Equip."
 - Confecção de extremidade de cabo de aço / linga (quando o escopo pedir confecção e teste da linga) → "IT OPE 01A - Confecção de Extremidade de Cabo de Aço"
 - Inspeção → "P SGQ 02_FAB_ Inspeção Visual de Soldagem"
-- Tratamento de Superfície (Pintura) → "P SGQ 16_Fabricação_Insp_Preparo_Superfície_Pintura - New Inter / PINTURA"
 - EPS (Especificação de Procedimento de Soldagem), incluir sempre que houver soldagem na OS (etapa Caldeiraria) → "EPS - Especificação de Procedimento de Soldagem: XXXXX" (placeholder, nunca invente o número real — vai dentro da etapa de Caldeiraria, junto com o campo Procedimento)
 
 Se uma etapa não tiver procedimento correspondente nesta lista, não invente um — apenas omita o campo "Procedimento" para essa etapa.
@@ -226,11 +227,11 @@ Se uma etapa não tiver procedimento correspondente nesta lista, não invente um
 
 **Hidrojato**: etapa independente, nunca faz parte da pintura. Cobre remoção de oxidações, impurezas, carepas de laminação e contaminantes, preparando a superfície para a pintura.
 
-**Inspeção**: executa inspeção visual, inspeção dimensional, Ensaios Não Destrutivos (END) quando aplicável, acompanhamento de testes, emissão de registros e liberação do equipamento. Mencionar sempre que a inspeção visual (e END, quando houver) é realizada por profissional qualificado pelo Sistema Nacional de Qualificação e Certificação – SNQC/ASNT. Se houver teste executado pela Mecânica ou pela Divisão Cabo de Aço, a Inspeção apenas acompanha (não executa o teste).
+**Tratamento de Superfície**: significa somente pintura. Nunca inserir hidrojato aqui. Descreva o esquema de pintura conforme especificado no escopo (número de demãos, tipo de tinta, cor, espessura em μm), e a verificação de espessura seca, aderência e uniformidade do acabamento.
 
 **Divisão Cabo de Aço Teste de Carga**: incluir apenas quando houver conjunto de içamento (lingas, manilhas, cabos de aço) com teste de carga estática. Detalhar a carga de teste (capacidade nominal × fator de segurança, ex.: 2.500 kg × 1,5 = 3.750 kg), monitoramento de deformações, estabilidade estrutural e funcionamento dos pontos de içamento. Emissão do certificado de teste de carga.
 
-**Tratamento de Superfície**: significa somente pintura. Nunca inserir hidrojato aqui. Descreva o esquema de pintura conforme especificado no escopo (número de demãos, tipo de tinta, cor, espessura em μm), e a verificação de espessura seca, aderência e uniformidade do acabamento.
+**Inspeção**: executa inspeção visual, inspeção dimensional, Ensaios Não Destrutivos (END) quando aplicável, acompanhamento de testes, emissão de registros e liberação do equipamento. Mencionar sempre que a inspeção visual (e END, quando houver) é realizada por profissional qualificado pelo Sistema Nacional de Qualificação e Certificação – SNQC/ASNT. Se houver teste executado pela Mecânica ou pela Divisão Cabo de Aço, a Inspeção apenas acompanha (não executa o teste).
 
 **Classificadora**: inserir a linha "Classificadora: BXXXXXXX/MEA/26" (placeholder, nunca invente o número real) sempre que houver teste de carga, hidrostático, pneumático ou qualquer teste acompanhado por classificadora. Caso contrário, não inserir.
 
@@ -286,9 +287,9 @@ Quando o escopo descrever um dos equipamentos abaixo, siga as regras específica
 - Plasma: 1 hora
 - Usinagem: 14 horas
 - Produção/Caldeiraria: 34 horas
-- Divisão de Cabo de Aço: 2 horas (somente incluir se houver fornecimento de linga e manilhas)
 - Inspeção/Controle de Qualidade: 8 horas
 - Tratamento de Superfície (Pintura/Boca Louca): 0 hora (etapa obrigatória mesmo com 0 hora — só pule esta etapa se o cálculo de horas realmente indicar 0 E a etapa não fizer sentido pelo contexto; via de regra, sempre inclua para Olhal)
+- Divisão de Cabo de Aço: 2 horas (somente incluir se houver fornecimento de linga e manilhas)
 
 Se o escopo do Olhal trouxer uma tabela de horas própria, use ela normalmente (ignore a tabela padrão acima). Só use a tabela padrão quando a tabela de horas estiver ausente do escopo.
 
@@ -305,13 +306,13 @@ Se o escopo do Olhal trouxer uma tabela de horas própria, use ela normalmente (
 - Procedimento do Tratamento de Superfície: "P SGQ 16_Fabricação_Insp_Preparo_Superfície_Pintura"
 - Divisão de Cabo de Aço: quando houver teste de carga, usar "IT OPE 05 - Tab_Carga de Trab_Carga de Teste de Tração" e/ou "IT OPE 06 - Teste Tração Carga Equip.", conforme aplicável. Quando for confecção/teste de linga, usar "IT OPE 01A - Confecção de Extremidade de Cabo de Aço".
 
-**Relatórios e Documentos específicos do Olhal (além dos gerais já definidos):**
 **Dados do Equipamento específico do Olhal (formato fixo, sempre nesta ordem e com estes rótulos exatos):**
 "Equipamento: Olhal de Içamento Soldável"
 "Padrão: [nome do padrão informado no escopo, ex.: New Inter x Constellation]"
 "Material: [material informado no escopo, ex.: Aço Carbono ASTM A36]"
 "Capacidade de Carga: [capacidade informada no escopo, ex.: 2.000 kg (2,0 ton)]"
 "Processos Envolvidos: Projeto, Produção/Plasma/Caldeiraria, Usinagem, Divisão de Cabo de Aço, Tratamento de Superfície e Inspeção / Controle de Qualidade." (ajuste esta lista removendo algum processo que não tenha sido usado nesta OS específica, ex.: se não houve Plasma, escreva apenas "Produção/Caldeiraria")
+
 **Relatórios e Documentos específicos do Olhal (formato fixo, sempre usar exatamente esta estrutura, substituindo apenas os placeholders XXXX):**
 
 "Setor Inspeção: VSE NI XXXX/26"
@@ -331,7 +332,61 @@ Técnica, objetiva, padrão industrial, linguagem de engenharia, coerente com o 
 Gere a OS completa, pronta para uso, seguindo rigorosamente a estrutura e formatação acima. Não adicione comentários, explicações ou observações fora da OS — a resposta deve ser só o documento.
 `;
 
-async function chamarIA(prompt) {
+const VBA_PROMPT_MESTRE = `
+Você é um especialista em gerar macros VBA para o Microsoft Project, a partir de uma Ordem de Serviço (OS) já pronta (com etapas, períodos/datas e procedimentos). Sua tarefa é transformar essa OS em um código VBA completo, testado mentalmente e pronto para colar no editor do MS Project (Alt+F11 > Inserir > Módulo) e rodar com F5, sem erros.
+
+## REGRAS RÍGIDAS (violá-las já causou erros reais no passado — nunca quebre nenhuma)
+
+1. NUNCA use "Set prj = ActiveProject". Use sempre "ActiveProject" diretamente em cada linha (ex.: Set t = ActiveProject.Tasks.Add(...), ActiveProject.ProjectStart = ...).
+2. NUNCA declare uma variável com espaço no nome (ex.: "tFab Group" é INVÁLIDO — o correto é "tFabGroup"). Revise mentalmente cada linha "Dim" antes de responder, garantindo que nenhum identificador tenha espaço.
+3. NUNCA termine uma linha com ponto solto ou deixe "Set t = ActiveProject.Tasks." incompleto — toda linha "Set" deve terminar com ".Add("texto")" completo, com parênteses fechados.
+4. NUNCA use durações decimais como "0.5d" — o separador decimal (vírgula ou ponto) quebra dependendo da configuração regional do Windows. Sempre converta meio-dia para horas: 0,5 dia = "4h", 0,25 dia = "2h". Prefira sempre durações inteiras em dias ("Xd") ou horas ("Xh").
+5. NUNCA vincule predecessoras usando texto como "3;5", "4FS+1d", "10FS+2d" — isso quebra por causa do idioma (FS vs TI) e do separador regional. SEMPRE use o método nativo: variavelDaTarefa.LinkPredecessors Tasks:=outraVariavelDaTarefa (uma chamada por predecessora, se houver mais de uma).
+6. NUNCA tente forçar negrito com FontBold ou SelectRow+Toggle — isso é instável e desnecessário. Tarefas que têm subtarefas (OutlineLevel = 2 com filhas em OutlineLevel = 3) já ficam automaticamente em negrito como Tarefas de Resumo no MS Project. Confie apenas nesse comportamento nativo.
+7. Ao forçar a visualização de Gráfico de Gantt no final da macro, SEMPRE envolva em "On Error Resume Next" e tente tanto o nome em português quanto o inglês como alternativa, pois o nome da view depende do idioma do MS Project do usuário. Use exatamente este padrão no final da macro:
+On Error Resume Next
+ViewApply Name:="Gráfico de Gantt"
+If Err.Number <> 0 Then
+    Err.Clear
+    ViewApply Name:="&Gantt Chart"
+End If
+SelectRow Row:=1
+EditGoTo Date:=ActiveProject.ProjectStart
+ZoomTimescale Entire:=True
+On Error GoTo 0
+8. SEMPRE declare todas as variáveis Task usadas na macro em um único bloco de linhas "Dim ... As Task" perto do início, com nomes limpos, sem erros de digitação e sem espaços, exatamente iguais aos usados depois nas linhas "Set".
+9. SEMPRE inicie a macro com um bloco de segurança perguntando ao usuário (via MsgBox vbYesNo) se deseja apagar tarefas existentes antes de reconstruir, exatamente neste padrão:
+If ActiveProject.Tasks.Count > 0 Then
+    If MsgBox("Deseja apagar as tarefas atuais para gerar este cronograma?", vbYesNo + vbQuestion, "Aviso") = vbYes Then
+        Dim i As Long
+        For i = ActiveProject.Tasks.Count To 1 Step -1
+            ActiveProject.Tasks(i).Delete
+        Next i
+    Else
+        Exit Sub
+    End If
+End If
+10. Se alguma data da OS cair em sábado ou domingo (confira as datas de "Período" fornecidas), habilite explicitamente os dias de fim de semana como dias úteis logo após definir ActiveProject.ProjectStart:
+On Error Resume Next
+ActiveProject.Calendar.WeekDays(pjSaturday).Working = True
+ActiveProject.Calendar.WeekDays(pjSunday).Working = True
+On Error GoTo 0
+Se nenhuma data cair em fim de semana, omita esse bloco completamente.
+11. Prefira sempre definir .Start e .Finish exatos (formato "DD/MM/AAAA") copiados diretamente do "Período" de cada etapa da OS, em vez de confiar apenas em duração calculada com LinkPredecessors — isso garante que o Gantt bata exatamente com a OS, sem nenhum desvio de data. Use LinkPredecessors adicionalmente onde ajudar a mostrar a dependência visual (setas), mas os valores de .Start/.Finish são a fonte da verdade e têm prioridade.
+
+## ESTRUTURA DA MACRO
+
+- OutlineLevel = 1: uma única tarefa com o título geral (nome do equipamento + referência da OS, tirado da seção "DADOS DO EQUIPAMENTO" se presente, ou inferido pelo contexto).
+- OutlineLevel = 2: uma tarefa por ETAPA da OS (ex.: "ETAPA – PROJETO", "ETAPA – CALDEIRARIA"), usando o texto exato do título da OS (sem o "☐ Concluída" nem a linha "ASS.:").
+- OutlineLevel = 3: uma ou mais subtarefas detalhadas por etapa, quebrando o(s) parágrafo(s) descritivo(s) daquela etapa em nomes de atividade curtos e objetivos (nunca copie o parágrafo inteiro literalmente — resuma em nomes de tarefa acionáveis, do jeito que cronogramas reais de MS Project são escritos). Distribua a duração total da etapa (a partir do seu "Período") entre as subtarefas de forma que a soma bata com o mesmo intervalo de datas, usando .Start e .Finish em cada subtarefa de forma coerente com o período geral da etapa.
+- Se uma etapa tiver uma linha "Procedimento", referencie entre parênteses no nome da subtarefa mais relevante, ex.: "Execução de soldagem estrutural (Proc: P SGQ 01_FAB_ Execução_Soldagem)".
+
+## FORMATO DA RESPOSTA
+
+Responda APENAS com o código VBA, começando em "Sub NomeDaMacro()" e terminando em "End Sub". Escolha um nome de macro claro baseado no equipamento/OS (ex.: "GerarCronograma_OlhalIcamento" — sem espaços, sem acentos, sem caracteres especiais no nome do Sub). Não adicione nenhuma explicação, preâmbulo ou marcação de código markdown — a resposta deve ser só o código VBA puro, pronto para colar direto no editor do VBA.
+`;
+
+async function chamarIA(prompt, systemPrompt = PROMPT_MESTRE) {
 
     for (const modelo of MODELOS) {
 
@@ -346,7 +401,7 @@ async function chamarIA(prompt) {
                 body: JSON.stringify({
                     model: modelo,
                     messages: [
-                        { role: "system", content: PROMPT_MESTRE },
+                        { role: "system", content: systemPrompt },
                         { role: "user", content: prompt }
                     ]
                 })
@@ -408,6 +463,46 @@ ${escopo}`;
 
         res.status(500).json({
             erro: "Erro ao gerar a OS."
+        });
+
+    }
+
+});
+
+// ---------- GERADOR DE CODIGO VBA (OPCIONAL, PROTEGIDO) ----------
+
+app.post("/gerar-vba", verificarToken, async (req, res) => {
+
+    try {
+
+        const { osTexto } = req.body;
+
+        if (!osTexto || !osTexto.trim()) {
+            return res.status(400).json({ erro: "Nenhuma OS fornecida para gerar o código." });
+        }
+
+        const prompt = `Aqui está a Ordem de Serviço já gerada. Crie o código VBA correspondente, seguindo rigorosamente todas as regras.
+
+${osTexto}`;
+
+        const texto = await chamarIA(prompt, VBA_PROMPT_MESTRE);
+
+        if (!texto) {
+            return res.status(500).json({
+                erro: "Todos os modelos gratuitos estão indisponíveis no momento. Tente novamente em alguns minutos."
+            });
+        }
+
+        res.json({
+            resultado: texto
+        });
+
+    } catch (erro) {
+
+        console.log(erro);
+
+        res.status(500).json({
+            erro: "Erro ao gerar o código VBA."
         });
 
     }

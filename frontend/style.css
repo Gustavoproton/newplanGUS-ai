@@ -281,3 +281,32 @@ textarea:focus{
 .resultado-box p:empty{
     display:none;
 }
+.botao-secundario{
+    background:transparent;
+    border:1px solid rgba(59,130,246,0.4);
+    color:#22D3EE;
+    margin-top:16px;
+}
+
+.botao-secundario:hover{
+    background:rgba(34,211,238,0.08);
+    box-shadow:none;
+    transform:none;
+}
+
+.vba-box{
+    width:100%;
+    min-height:250px;
+    max-height:500px;
+    overflow:auto;
+    padding:20px;
+    font-size:13px;
+    font-family:'IBM Plex Mono', monospace;
+    line-height:1.6;
+    border-radius:8px;
+    border:1px solid rgba(59,130,246,0.2);
+    background:#0B1120;
+    color:#93C5FD;
+    white-space:pre;
+    margin-top:8px;
+}
